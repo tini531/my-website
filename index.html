@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- 引入 jQuery (Bootstrap 4 需要 jQuery) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 引入 Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+<title>Document</title>
+    <style type="text/css">
+        
+    * {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    }
+/* 設定內容高度填滿，去除底下空白 */
+html, body {
+    height: 100%;
+}
+    body{
+        font-family: "Zen Old Mincho", sans-serif;
+        letter-spacing: 2px;
+        
+    }
+
+    .zen-old-mincho-semibold {
+    font-family: "Zen Old Mincho", serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+    /* 抬頭 */
+    .header{
+    position: fixed;
+    top:0;
+    z-index: 1000;
+    width:100%;
+    box-sizing: border-box;
+    height:70px;
+    background-color: #36684B;
+    color:antiquewhite;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    /* 內邊距 */
+    padding: 0 20px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .header .logo{
+        width:350px;
+    }
+    .header .logo img{
+        width: 100%;  
+        height: auto; 
+    }
+
+    .header ul{
+        display:flex;
+        margin:0;
+        list-style-type: none;
+        align-items: center
+    } 
+
+    .header ul li{
+        padding:10px 20px;
+        cursor: pointer;
+        position: relative;
+        letter-spacing: 2px;
+        
+
+    }
+
+    #menu_control{
+        opacity: 0;
+    }
+    .header span{
+        opacity: 0;
+    }
+
+    .header ul li:hover{
+        background-color: antiquewhite;
+        color:#36684B;
+        transition: background-color 0.3s ease;
+    }
+    .header ul li+li::before{
+    content: '';
+    position: absolute;
+    /* 線段位置 */
+    left:0;
+    /* 上下為設定線段 */
+    top:10px;
+    bottom:10px;
+    
+    width: 1px; 
+    background-color: antiquewhite;
+    }
+    
+    @media(max-width: 768px) {
+    .header .logo {
+        width:100%;
+    }
+    #menu_control{
+        position: absolute;
+        opacity: 0;
+    }
+    .header{
+        position: fixed;
+    }
+    .menu_btn{
+        width:40px;
+        height:40px;
+        background-color:#36684B;
+        display:block;
+        top:5px;
+        right:10px;
+        position: relative;
+    }
+    
+    .menu_btn::before{
+        content:'';
+        position:absolute;
+        height:2px;
+        left:2px;
+        width:36px;
+        background-color:antiquewhite;
+        top:50%;
+
+        margin:auto;
+        box-shadow:0px 8px 0px antiquewhite,
+                    0px -8px 0px antiquewhite;
+    }
+
+    nav{
+        
+        height:calc(100vh - 40px);
+        background-color:#559770;
+        position:absolute;
+        top:60px;
+        /* 往左消失 */
+        left:-100%;
+        transition:.5s;
+        
+    }
+    nav, ul {
+    display: flex;
+    width: 100%;
+    flex-direction: column; /* 确保子元素垂直排列 */
+    padding: 0; /* 去除默认的内边距 */
+    margin: 0; /* 去除默认的外边距 */
+    text-align: left; 
+}
+    nav ul li{
+        display:block;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        border-bottom: 1px solid antiquewhite;
+
+    }
+
+    #menu_control:checked ~ .header nav{
+        left:0;
+    }
+
+    .header ul li+li::before{
+        display:none;
+    }
+    .header .logo{
+        width:350px;
+    }
+}
+
+    /* banner */
+    .banner{
+        margin: 0;   /* 去除圖片的默認邊距 */
+    padding: 0;
+    margin-top:40px;
+    }
+    .banner img{
+    width: 100%;  
+    height: auto; 
+    /* 可去除下方多餘空隙 */
+    display: block;
+    margin: 0;   /* 去除圖片的默認邊距 */
+    padding: 0;
+}
+
+@media(max-width: 768px) {
+    .banner{
+        margin-top:70px;
+    }
+}
+
+
+
+    /* 活動區域 */
+    .events{
+        background-image: url("Frame 16.png");  /* 背景圖片的路徑 */
+    background-size: cover;  /* 讓背景圖片完全覆蓋元素區域 */
+    background-position: center center;  /* 背景圖片居中 */
+    background-repeat: no-repeat;  /* 防止背景圖片重複 */
+    height:auto;
+    width:100%;
+    padding:0;
+    margin:0;
+    
+    }
+    
+    .events .content h3{
+        text-align: left;
+        color:#36684B;
+    
+        
+    }
+    .events .content{
+        padding:100px 0;
+        width:80%;
+        height:100%;
+        text-align: center;
+        color:#36684B;
+        margin:auto;
+        
+    }
+    .events .item{
+        width:100%;
+        margin:auto;
+        display: flex;
+    justify-content: space-between;  /* 保證左右對齊並且分開 */
+    align-items: center;
+    gap: 20px; 
+    padding:20px 0;
+    
+    }
+    .events .item .container1 {
+    width:100%;
+    border-radius: 10px;
+    
+}
+.events .item .container1 img{
+    border-radius: 20px;
+    width:100%;
+}
+
+
+
+.events .item .container2 .image-wrapper{
+    transition: transform 0.5s;
+    cursor: pointer;
+}
+.events .item .container2 .image-wrapper:hover{
+    top: -10px;
+    transform: scale(1.1);
+    
+}
+
+
+
+.events .item .container1 img,
+.events .item .container2 img {
+    width: 100%; 
+    height:auto; 
+    object-fit: cover;
+    position: relative;
+    
+}
+
+
+/* image-wrapper 必須設置為 flex 且確保其高度填滿容器 */
+.events .item .container2 .image-wrapper {
+    position: relative;
+    display: flex; /* 保證內容垂直水平居中 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    height: 100%; /* 確保 .image-wrapper 佔據足夠的高度 */
+    margin: 10px;
+}
+
+/* 文字層 */
+.events .item .container2 .image-wrapper .text-overlay {
+    position: absolute;
+    color: antiquewhite;
+    font-size: 18px;
+    
+    text-align: center; /* 使文字水平居中 */
+}
+
+.events .item .container2 .text-overlay p{
+    font-size: 20px;
+    margin-bottom: 0;
+    opacity: 0.7;
+}
+
+/* 圖片設置 */
+.events .item .container2.container2 img {
+    width: 100%; /* 圖片填滿容器 */
+    height: auto;
+}
+
+@media(max-width: 1200px) {
+    .events .item{
+        width:100%;
+    }
+    .events .content{
+        width:90%;
+    }
+    .events .item{
+        display: block;
+        font-size:10px;
+        margin:auto;
+    }
+    .events .item .container2.container2{
+        margin:10px 0;
+    }
+    .events .item .container2 .text-overlay{
+        line-height: 20px;
+        width:50%;
+    }
+    .events .item .container2 .text-overlay p{
+        font-size:20px;
+        overflow-wrap: break-word;
+    }
+    .events .item .container2{
+        display: flex;               /* 啟用 flexbox */
+        flex-direction: column; /* 將主軸設定為垂直方向，避免項目橫向排列 */
+        align-items: center;  /* 設定水平置中 */
+    }
+    
+    .events .item .container2 .image-wrapper{
+        width:70%;
+        
+    }
+    
+}
+@media(max-width: 768px) {
+    
+    .events .content{
+        width:90%;
+    }
+    .events .item{
+        display: block;
+        font-size:10px;
+    }
+    .events .item .container2 .text-overlay{
+        line-height: 20px;
+        width:50%;
+    }
+    .events .item .container2 .text-overlay p{
+        font-size:15px;
+        overflow-wrap: break-word;
+    }
+    .events .item .container2 .text-overlay h4{
+        font-size:20px;
+    }
+}
+
+@media(max-width:600px) {
+    .events .content{
+        width:90%;
+    }
+    .events .item{
+        display: block;
+        font-size:10px;
+        
+    }
+    .events .item .container1{
+        width:100%;
+    }
+    .events .item .container1 img{
+        width:100%;
+    }
+
+    .events .item .container2{
+        
+        margin:auto;
+    }
+    .events .item .container2 .text-overlay{
+        line-height: 10px;
+        width:100%;
+    }
+    
+    .events .item .container2 .image-wrapper object{
+        width:95%;
+        
+    }
+}
+
+
+
+.introduce{
+    background-image: url("Frame 18 (1).png");
+    position:relative;
+    width:100%;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    /* height:auto; */
+    padding:150px 0;
+    min-height: 50%;
+    
+    color: antiquewhite;
+    /* 確保此區域高於下方區域(為了讓超出圖片在下層背景上方) */
+    z-index: 1;
+}
+.introduce .content{
+    width:80%;
+    
+}
+.introduce .item{
+    margin:30px 0;
+    display: flex;
+    width:50%;
+}
+.introduce .item .container1{
+    
+}
+.introduce .item .container1 p{
+    line-height: 50px;
+    font-size: 16px;
+    width:80%;
+    font-family: "Noto Sans", serif;
+    padding:0 20px;
+}
+.introduce .item .container2{
+    position: absolute;
+    bottom: -100px;  /* 背景圖向下超出容器，調整此值 */
+    /* 最右邊靠左100px移動 */
+    right: 100px;
+    width:50%;
+    height:100%;  
+    z-index:1; 
+}
+
+
+.introduce .item .container2 img{
+    width:100%;
+    height:auto;
+    
+}
+
+@media(max-width: 1400px) {
+    
+    .introduce .item .container2 {
+        width:40%;
+        bottom: -400px;
+    }
+    
+.introduce .item{
+    width:100%;
+}
+.introduce .item .container1 img{
+    width:50%;
+}
+.introduce .item .container1{
+    width:100%;
+}
+.introduce .item .container1 p{
+    padding:0;
+    width:100%;
+}
+}
+@media(max-width: 768px) {
+    .introduce .item .container1 img{
+    width:100%;
+}
+.introduce .item .container2 img{
+    display: none;
+    
+}
+}
+
+
+.fication{
+    color: antiquewhite;
+    background-image: url("Frame 18.png");
+    z-index: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    padding:150px 0;
+    height:auto;
+}
+.fication .content{
+    width:80%;
+    margin-top: 50px;
+}
+
+.fication .content .item{
+    margin:50px 0;
+    display:flex;
+}
+.fication .content .item img{
+    width:100%;
+    margin:10px;
+    position: relative;
+    border-radius: 50%;
+}
+
+
+
+.workshop{
+    background-image: url("Frame 19");
+}
+
+
+
+.fication .content .item .image-wrapper{
+position: relative;
+    display: flex; /* 保證內容垂直水平居中 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    height: 100%; /* 確保 .image-wrapper 佔據足夠的高度 */
+    margin: 10px;
+    cursor: pointer;
+}
+
+.fication .content .item .image-wrapper .text-overlay{
+    margin:auto;
+    position: absolute;
+    color: antiquewhite;
+    
+    letter-spacing:10px;
+    writing-mode: vertical-rl;
+    text-align: center; 
+    background-color: #36684B;
+    padding:10px;
+    border-radius: 50px;
+}
+.fication .content .item .image-wrapper .text-overlay h4{
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    /* 上方間距 */
+    margin-top: 10px;
+}
+.fication .content .item .image-wrapper img {
+    transition: transform 0.3s;
+}
+/* 當滑鼠碰到圖片時 圖片會往上跑10px+周圍產生陰影  */
+.fication .content .item .image-wrapper:hover img {
+    transform: translateY(-10px); /* 图片在 hover 时向上移动 */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3); /* 添加阴影 */
+    /* 鼠標靠近後會放大 */
+    transform: scale(1.1);
+}
+
+/* 當滑鼠碰到圖片時 文字也會往上跑10px  */
+.fication .content .item .image-wrapper:hover .text-overlay {
+    transform: translateY(-10px); /* 文字跟随图片一起移动 */
+    background-color: antiquewhite;
+    color:#36684B;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    
+}
+@media(max-width: 1400px) {
+    
+    .fication .content .item{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width:100%;
+        /* margin:auto; */
+    }
+
+    .fication .content .item .image-wrapper{
+        width:40%;
+    }
+
+    .fication .content{
+        width:80%;
+    }
+
+}
+
+@media(max-width: 768px) {
+    .fication .content .item{
+        display: flex;
+    justify-content: center; 
+    align-items: center;
+        box-sizing: border-box;
+    }
+
+    .fication .content .item .image-wrapper{
+        width:50%;
+    }
+
+    .fication .content{
+        width:80%;
+    }
+
+}
+
+
+
+
+.workshop{
+    background-image: url("Frame 19.png");
+    background-size: cover; /* 背景图像会自动缩放，保持容器覆盖，可能会裁剪 */
+    background-position: center; /* 背景图像居中 */
+    background-repeat: no-repeat; /* 背景不重复 */
+    padding:100px 30px;
+    width:100%;
+    height:auto;
+    margin:auto;
+}
+
+.worksho .item{
+    width:1400px;
+    
+}
+.workshop .content1{
+    display: flex;
+    justify-content: center;  /* 水平居中 */
+    align-items: center;      /* 垂直居中 */
+}
+
+.workshop .content1 img{
+    width:100%;
+    
+}
+.workshop .content1 .container1{
+    width:40%;
+    
+}
+.workshop .content1 .container2{
+    color:blanchedalmond;
+    margin-top:100px;
+    text-shadow: 2px 2px 5px #6B3C22;
+}
+
+.workshop .content1 .container1+.container2{
+    margin-left: 20px;
+}
+.workshop .content1 .container2 h3{
+    margin-bottom: 30px;
+    /* font-size: 18px; */
+}
+.workshop .content1 .container2 h4{
+    font-family: "Noto Sans", serif; /* 字体 */
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+.workshop .content1 .container2 p{
+    display:flex;
+    align-items: center;
+    margin-left: 20px;
+    line-height: 50px;
+    font-family: "Noto Sans", serif;
+    border-left: 1px solid blanchedalmond ;
+    padding-left: 30px;
+    height:200px;
+}
+
+.workshop .content2{
+    margin:auto;
+    margin-top:100px;
+    width:70%;
+    justify-content: center;  /* 水平居中 */
+    
+}
+
+.workshop .content2 h3{
+    margin-bottom: 50px;
+    color:#6B3C22;
+    font-weight: bold;
+}
+
+.workshop .content2 h4{
+    color:#B2683F;
+    font-size: 40px;
+    
+}
+.workshop .content2 h4 span{
+    background-color: #B2683F;
+    color: antiquewhite;
+    padding:10px 20px;
+    display: inline-block;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight:900;
+}
+
+
+
+
+
+.workshop .content2 p{
+    color: #B2683F;
+    margin-left: 100px;
+    font-family: "Noto Sans", serif;
+    font-weight:700;
+    font-size: 18px;
+}
+
+.workshop .content2 p span{
+    font-weight:500; 
+    font-size: 25px;
+}
+.workshop .content2 .container1,
+.workshop .content2 .container2,
+.workshop .content2 .container3{
+    margin-bottom: 50px;
+    padding:0 50px;
+}
+.workshop .content2 strong {
+    font-weight: 900 !important;
+    color:#6B3C22;
+    text-transform: uppercase; /* 可选：让文本变为大写 */
+}
+
+
+@media(max-width: 1400px) {
+    .workshop .content2{
+    margin-top:400px;
+    
+}
+
+.workshop .content1{
+    margin-top:50px;
+}
+}
+
+@media(max-width: 768px) {
+    .workshop .content1 .container1{
+        width:100%;
+    }
+    .workshop .content1{
+        display: flex;
+        /* 設定為垂直排列居中 */
+        flex-direction: column;
+        align-items: center;
+        
+    }
+
+
+
+    .workshop {
+        width:100%;
+        padding:0 10px;
+}
+.workshop .item{
+    padding:100px 0;
+}
+
+.workshop .content1 .container1{
+    width:70%;
+    display: flex;
+    /* 讓內容圖片水平居中 */
+    justify-content: center;
+    
+}
+.workshop .content1 img{
+    width:70%;
+    
+}
+.workshop .content1 .container2 h4{
+    margin-bottom:50px;
+}
+
+
+.workshop .content2{
+    margin:auto;
+    margin-top:200px;
+    width:100%;
+    /* justify-content: center; */
+    padding:0 20px;
+    
+}
+
+.workshop .content1 .container2{
+    margin-top:10px;
+}
+
+.workshop .content2 p{
+    margin-left:0px;
+    margin:10px 0;
+}
+
+}
+
+
+
+.company{
+    background-image: url("Frame 20.png");
+    color: antiquewhite;
+    margin:auto;
+    width:100%;
+}
+.company .item{
+    padding:100px 0;
+    width:80%;
+    margin:auto;
+}
+.company .item .content2{
+    display: flex;
+    justify-content: center; 
+    width:100%;
+    margin:30px 0;
+}
+.company .item .content2 img{
+    width:40%;
+}
+
+@media(max-width: 1400px) {
+    
+
+    .company .item .content2 img{
+        margin:20px 0;
+    width:60%;
+}
+}
+
+@media(max-width: 768px) {
+    .company .item{
+        width:100%;
+        padding:40px 20px;
+    }
+
+    .company .item .content2 img{
+        margin:20px 0;
+    width:90%;
+}
+}
+
+
+
+/* 交通資訊 */
+.information{
+    background-image: url("Frame 22.png");
+    padding:100px 0 0 0;
+    display:flex;
+    background-size: cover;  /* 讓背景圖片完全覆蓋元素區域 */
+    background-position: center center;  /* 背景圖片居中 */
+    background-repeat: no-repeat;  /* 防止背景圖片重複 */
+    align-items: center;
+    min-height: 130vh;
+    position: relative;
+}
+.information .content1 {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    position: relative;
+    align-items: center;
+
+}
+
+.information .content1 .image-wrapper{
+    width:100%;
+    position: relative;
+}
+
+.information .content1 .image-wrapper img{
+    width:100%;
+}
+.information .content1 .text-overlay{
+    position: absolute;
+    color: antiquewhite;
+    
+    top: 10%; /* 确保文本从容器的顶部开始定位 */
+    left:10%;
+    z-index: 1;
+    
+}
+.information .content1 .text-overlay h4{
+    margin-bottom:50px;
+    
+}
+
+.information .content1 .text-overlay p{
+    font-family: "Noto Sans", serif;
+    line-height: 50px;
+}
+
+.information .content1 .container2{
+    line-height: 50px;
+    padding:50px 100px;
+    color: #6B3C22;
+    
+}
+.information .content1 .container2 h4{
+    font-size: 20px;
+    font-weight:900;
+    border-radius: 50px;
+    border: 1px solid #6B3C22;
+    padding:10px;
+    display: inline-block;
+}
+.information .content1 .container2 p{
+    
+    color: #6B3C22;
+    font-family: "Noto Sans", serif;
+    font-weight:700;
+    font-size: 18px;
+}
+
+@media(max-width: 1400px) {
+    .information{
+        width:100%;
+        display: flex;
+    justify-content: center;  /* 水平居中 */
+    align-items: center;      /* 垂直居中 */
+    position: relative;
+    height: auto;
+    min-height: 150vh;
+    
+    }
+
+    .information .content1 {
+    display: block;
+    width:100%;
+    
+    
+}
+
+.information .content1 .image-wrapper img{
+    width:70%;
+}
+
+.information .content1 .text-overlay{
+    position: absolute;
+    left:100px;
+    
+}
+
+@media(max-width:1000px) {
+    .information{
+        min-height:100vh;
+        position: relative;
+    }
+    .information .content1 .image-wrapper{
+        height:300px;
+        
+        
+    }
+    .information .content1 .image-wrapper img{
+        opacity: 0;
+        height:50%;
+        
+    }
+    
+    .information .content1 .text-overlay{
+        color: #6B3C22;
+        font-weight: bold;
+        border-bottom: 1px solid #6B3C22;
+        top:0;
+        
+    }
+}
+
+}
+/* 搜尋欄 */
+.form{
+    background-image: url("Frame 23.png");
+    width:100%;
+    display:flex;
+    margin:auto;
+    color:antiquewhite;
+}
+
+
+.form .content{
+    width:1400px;
+    margin:auto;
+    padding:100px;
+    
+}
+
+
+.form .search-container{
+    
+    padding:50px;
+    width:70%;
+    margin:auto;
+    
+}
+
+.form .search-container .search-input{
+    width:100%;
+    font-family: "Noto Sans", serif;
+    display: block;
+    border-radius: 5px;
+    padding:10px;
+    margin:20px auto;
+    border: 0ch;
+}
+
+.form .search-container .search-button{
+    width:100px;
+    font-family: "Noto Sans", serif;
+    display: block;
+    border-radius: 50px;
+    padding:5px;
+    margin:auto;
+    border: 0ch;
+    color:#6B3C22;
+    background-color: antiquewhite;
+    transition: transform 0.3s;
+}
+.form .search-container .search-button:hover{
+    color:antiquewhite;
+    background-color:#6B3C22;
+    /* 鼠標靠近後會放大 */
+    transform: scale(1.1);
+}
+.form .search-input:focus {
+    outline: none;  
+    
+}
+
+.form .search-button:focus {
+    outline: none;  
+    border-color: #4CAF50; 
+}
+
+@media(max-width: 1400px) {
+    .form{
+        padding:0;
+        margin: 0;
+        width:100%;
+    }
+    .form .content{
+        padding:70px 0;
+        margin:0;
+        width:80%;
+        margin:20px auto;
+    }
+    .form .search-container{
+        margin:10px 0;
+        padding:0;
+        width:100%;
+    }
+}
+
+/* 頁尾 */
+.footer{
+    background-color: #36684B;
+    color:antiquewhite;
+}
+
+.footer .item1{
+    display:flex;
+    justify-content: space-between; 
+    padding:70px 50px;
+}
+.footer .content2{
+    line-height: 50px;
+}
+.footer a{
+    color:antiquewhite;
+    
+}
+.footer .item2 p{
+    text-align: center;
+    background-color: #6B3C22;
+    color:bisque;
+    width:100%;
+    padding:10px;
+}
+@media(max-width:768px) {
+    
+    .footer .item1 img{
+        width:350px;
+    }
+        
+        .footer .item1 .content1{
+            margin:10px 0;
+        }
+    
+    .footer .item1{
+        display: block;
+        padding:30px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- 抬頭 -->
+    <input type="checkbox" name="" id="menu_control">
+    <div class="header">
+        <div class="logo">
+            <img src="Frame 26.png">
+        </div>
+
+        <label for="menu_control" class="menu_btn">
+            <!-- <span>選單</span> -->
+        </label>
+        <nav>
+            <ul>
+            <li>最新活動</li>
+            <li>展覽介紹</li>
+            <li>工作坊活動</li>
+            <li>展覽資訊</li>
+            <li>預約看展</li>
+            </ul>
+        </nav>
+
+    </div>
+
+
+    <!-- banner -->
+    <div class="banner">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="Frame 8.png" alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="Frame 28.png" alt="Second slide">
+            </div>
+            
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
+            </div>
+    </div>
+
+
+    <!-- 活動區域 -->
+    <div class="events">
+        
+        <div class="content">
+            <h3>最新活動 | Exhibition activities</h3>
+
+            <div class="item">
+                <div class="container1">
+                    <img src="Frame 9.png">
+                </div>
+                <div class="container2">
+                    <div class="image-wrapper">
+                        <object type="image/svg+xml" data="Frame 25 (2).svg" ></object>
+                        <div class="text-overlay"><h4>預約看展</h4>
+                            <p>Let's visit the exhibition!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="image-wrapper">
+                        <object type="image/svg+xml" data="Frame 25 (2).svg" style="color:#4CAF50;"></object>
+                        
+                        <div class="text-overlay"><h4>100元優惠券</h4>
+                            <p>100 yuan coupon</p>
+                        </div>
+                    </div>
+
+                    <div class="image-wrapper">
+                        <object type="image/svg+xml" data="Frame 25 (2).svg" ></object>
+                        <div class="text-overlay"><h4>展覽詳情</h4>
+                            <p>Exhibition details</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+    <!-- 展覽介紹 -->
+    <div class="introduce">
+        <div class="content">
+            <h3>展覽介紹 | Exhibition introduction</h3>
+            
+            <div class="item">
+                <div class="container1">
+                    <img src="Frame 29 (1).png">
+                <p>隨著現代社會的進步和工業化生產的興起，家具的製作已不再完全依賴手工，機械化生產提高了家具的製造速度和精度，但也讓傳統手工技藝逐漸淡出人們的視野。
+                    這時，家具展作為一個展示手工藝與現代設計碰撞的平台，應運而生。
+                    家具展的出現，不僅是設計師和製造商展示新產品的場所，更是一次跨時代、跨文化的交流。</p>
+                </div>
+                
+                <div class="container2">
+                    <img src="Frame 10.png">
+                    
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!-- 分類 -->
+    <div class="fication">
+        <div class="content">
+            <h3>展覽分類 | Exhibition classification</h3>
+            <div class="item">
+                <div class="image-wrapper">
+                <img src="Frame 11.png">
+                            <!-- 文字覆蓋 -->
+                <div class="text-overlay"><h4> 臥室家具區</h4>
+                </div>
+                </div>
+
+                <div class="image-wrapper">
+                <img src="Frame 12.png">
+                <div class="text-overlay"><h4> 居家擺設區</h4>
+                </div>
+                </div>
+
+                <div class="image-wrapper">
+                    <img src="Frame 13.png">
+                    <div class="text-overlay"><h4> 客廳家居區</h4>
+                    </div>
+                    </div>
+
+                    <div class="image-wrapper">
+                        <img src="Frame 14.png">
+                        <div class="text-overlay"><h4> 廚房用品區</h4>
+                        </div>
+                        </div>
+            </div>
+            </div>
+    </div>
+
+
+    <div class="workshop">
+        <div class="item">
+
+        <div class="content1">
+            <div class="container1">
+                <img src="Frame 15.png">
+            </div>
+            <div class="container2">
+                <h3>綠色家具工作坊 | Green furniture workshop</h3>
+                <h4>《綠色設計：家具中的可持續未來》</h4>
+                <p>演講時間：2024年12月1日，下午2:00<br>
+                    地點： 展區 J307<br>
+                    主講設計師：Maria García<br>
+                    內容簡介：Maria將分享如何運用環保材料與設計技巧創造可持續的家具
+                    產品。</p>
+            </div>
+        </div>
+
+        <div class="content2">
+            <h3>工作坊常見問題 | FAQ</h3>
+
+            <div class="container1">
+            <h4>Q1<br><span> 我需要具備什麼前置技能才能參加工作坊？</span></h4>
+            <p><span>A1</span> 無論您是初學者還是有一定經驗的設計師，我們都歡迎您參加。<strong>本工作坊適合各個層次的參與者</strong>，您不需要有專業的設計背景。只要您對家具設計充滿興趣並且願意學習，這將是一個極好的學習機會。</p>
+            </div>
+
+            <div class="container2">
+                <h4>Q2<br><span> 工作坊的時間安排是怎麼樣的？</span></h4>
+            <p><span>A2</span> <strong>每場工作坊的時間為 4 小時</strong>，包括理論講解、實作練習及互動討論。具體的時間安排會提前通知參加者，並確保不與其他展覽活動時間衝突。您可以在報名後收到詳細的日程安排。</div>
+
+            <div class="container3">
+                <h4>Q3<br><span> 工作坊中會提供材料嗎？</span></h4>
+                <p><span>A3</span> 是的， <strong>我們會為每位參與者提供所需的基本材料與工具。</strong>例如，木材、工具、顏料、樣本等，這些都會在工作坊開始前準備好。若工作坊中有特殊材料需要自備，我們會提前告知。
+                </div>
+        </div>
+    </div>
+    
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 參加廠商 -->
+    <div class="company">
+        <div class="item">
+        <div class="content1">
+            <h3>參展廠商 | Exhibitors</h3>
+    </div>
+    <div class="content2">
+    <img src="Frame 24.png">
+    </div>
+    </div>
+</div>
+
+
+    <!-- 交通資訊 -->
+    <div class=" information">
+        <div class="content1">
+
+            <div class="container1">
+
+                <div class="image-wrapper">
+                <img src="Frame 21.png">
+                <div class="text-overlay">
+                    <h3>展覽資訊 | Exhibition information</h3>
+                    <p>展覽名稱：2024 全球家具設計大展<br>
+                        展覽地點：XX設計展覽館<br>
+                        展覽樓層：3樓，展覽廳A、B、C區<br>
+                        地址：X市X區X路五段123號
+                    </p>
+                </div>
+                </div>
+
+            </div>
+
+            <div class="container2">
+            <h4>交通指南：</h4>
+            <p>捷運：搭乘X捷運線至「X站」，從2號出口出站，步行約5分鐘可達展覽場館 <br>
+            公車：多條公車路線經過場館附近，包括15、36、52、123號等公車 <br>
+            請在「X世界貿易中心」站下車，步行約3分鐘可到達展覽入口 <br>
+            自駕：展覽場館附近設有停車場，提供參觀者停車服務 <br>
+            停車費用為每小時NT$30
+            </p>
+            <br>
+            <h4>展覽開放時間：</h4>
+            <p>2024年12月1日至12月5日 上午10:00至下午6:00 <br>
+                <br>
+                <h4>入場票：</h4>
+            <p>現場票價為NT$300，預售票可享8折優惠 <br>
+            優惠票（學生、長者）NT$150
+            </p>
+
+            </div>
+
+        </div>    
+    </div>
+
+
+
+    <!-- 預約看展 -->
+    <div class="form">
+        <div class="content">
+            <h3>預約看展 | Let's visit the exhibition! </h3>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="email">
+            <input type="text" class="search-input" placeholder="姓名">
+            <input type="text" class="search-input" placeholder="日期">
+            <button class="search-button">搜尋</button>
+        </div>
+    </div>
+    </div>
+
+
+    
+    <div class="footer">
+        <div class="item1">
+        <div class="content1">
+        <img src="Frame 26.png">
+        </div>
+
+        <div class="content2">
+        <h5>聯絡我們</h5>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=example@example.com&su=關於你的服務&body=請簡要描述你要詢問的問題。" class="email-link">
+            example@example.com
+        </a>
+        <br>
+        <a href="tel:+886-2-1234-5678" class="phone-link">
+            +886-2-1234-5678
+        </a>
+    </div>
+</div>
+
+    <div class="item2">
+        <p>© 2024 John Doe. All rights reserved.</p>
+
+    </div>
+            
+        
+        </div>
+
+</body>
+</html>
